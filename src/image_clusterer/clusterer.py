@@ -1,0 +1,16 @@
+import torch
+
+class Clusterer:
+    def __init__(self, embedding_dim, gpu: bool = False):
+        self.gpu = gpu
+        self.data = torch.zeros(0, embedding_dim).to('cuda' if self.gpu else 'cpu')
+        self.clusters = None
+
+    def push(self, embedding):
+        self.push_batch(torch.stack([embedding]).to('cuda' if self.gpu else 'cpu'))
+
+    def push_batch(self, batch_embedding):
+        self.data = torch.cat((self.data, batch_embedding), dim=0)
+
+    def make_cluster(self, *args, **kwargs):
+        raise NotImplementedError()
