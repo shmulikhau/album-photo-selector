@@ -15,9 +15,11 @@ class KMeansClusterer(Clusterer):
             weights = self.data @ kernels.T
             self.vectors2kernels = weights.argmax(dim=-1)
             weights = F.one_hot(self.vectors2kernels).to('cuda' if self.gpu else 'cpu')
-            kernels_tmp = (weights[None,...] * self.data[...,None]).sum(dim=-2)
-            if kernels_tmp.equal(kernels):
+            kernels_tmp = (weights[None,...] * self.data[...,None]).sum(dim=-2) # TODO
+            kernels_tmp /= kernels_tmp.norm(dim=-1)
+            if torch.eye(len(kernels_tmp)) # TODO
                 break
+            kernels = kernels_tmp
     
     def _select_random_kernels(self, n_kernels):
         n_vectors, _ = self.data.shape
