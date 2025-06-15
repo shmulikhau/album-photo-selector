@@ -9,6 +9,8 @@ MAX_CYCLES = int(os.getenv("K_MEANS_MAX_CYCLES", "100"))
 
 class KMeansClusterer(Clusterer):
     def make_cluster(self, n_kernels):
+        if n_kernels > len(self.data):
+            raise Exception(message=f"n_kernels '{n_kernels}' bigger than amount of vectors '{len(data)}'")
         i_kernels = self._select_random_kernels(n_kernels)
         kernels = self.data[i_kernels]
         for _ in range(MAX_CYCLES):
