@@ -4,12 +4,12 @@ from src.image_clusterer.clusterer import Clusterer
 RANDOM_SCALE: float = 4.
 
 class KMeansClusterer(Clusterer):
-    def make_cluster(self, gpu: bool = False):
+    def make_cluster(self):
         return super().make_cluster()
     
-    def select_random_kernels(self, n_kernels):
+    def _select_random_kernels(self, n_kernels):
         n_vectors, _ = self.data.shape
-        a = torch.rand(1, n_kernels).to(self.device).pow(RANDOM_SCALE)
+        a = torch.rand(1, n_kernels).to('cuda' if self.gpu else 'cpu').pow(RANDOM_SCALE)
         a[:,0] = a[:,0] * (n_vectors - n_kernels)
         a[:,0] = a[:,0].floor()
         for i in range(1, n_kernels):
