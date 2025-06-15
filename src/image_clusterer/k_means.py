@@ -17,8 +17,7 @@ class KMeansClusterer(Clusterer):
             weights = F.one_hot(self.vectors2kernels).to('cuda' if self.gpu else 'cpu')
             kernels_tmp = (weights[...,None] * self.data[None,...]).sum(dim=-2)
             kernels_tmp /= kernels_tmp.norm(dim=-1)
-            if (torch.ones(len(kernels_tmp), len(kernels_tmp)).to('cuda' if self.gpu else 'cpu') \
-                - torch.eye(len(kernels_tmp)) + kernels_tmp @ kernels.T > 1. - 1e-5).all():
+            if (kernels_tmp * kernels).sum() > float(len(kernels) - 1e-4:
                 break
             kernels = kernels_tmp
     
