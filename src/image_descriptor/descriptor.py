@@ -14,5 +14,5 @@ When given a list of images, your response should:
     def load_model(self):
         raise NotImplementedError()
 
-    def get_description(self, image_paths: list[str]) -> str:
+    def get_description(self, image_paths: list[str], text_query: str) -> str:
         raise NotImplementedError()

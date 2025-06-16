@@ -5,11 +5,11 @@ from src.image_descriptor.descriptor import Descriptor
 class Qwen2_5VL(Descriptor):
 
     def load_model(self):
-        model = Qwen2_5_VLForConditionalGeneration.from_pretrained("Qwen/Qwen2.5-VL-7B-Instruct", torch_dtype="auto", device_map="auto")
-        processor = AutoProcessor.from_pretrained("Qwen/Qwen2.5-VL-7B-Instruct")
+        model = Qwen2_5_VLForConditionalGeneration.from_pretrained("Qwen/Qwen2.5-VL-3B-Instruct", torch_dtype="auto", device_map="auto")
+        processor = AutoProcessor.from_pretrained("Qwen/Qwen2.5-VL-3B-Instruct")
         return model, processor
     
-    def get_description(self, image_paths: list[str]) -> str:
+    def get_description(self, image_paths: list[str], text_query: str="Identify the similarities between these images.") -> str:
         model, processor = self.model
 
         # Messages containing multiple images and a text query
@@ -18,7 +18,7 @@ class Qwen2_5VL(Descriptor):
                 "role": "user",
                 "content": [
                     *[{"type": "image", "image": f"file:///{path}"} for path in image_paths],
-                    {"type": "text", "text": "Identify the similarities between these images."},
+                    {"type": "text", "text": text_query},
                 ],
             }
         ]
