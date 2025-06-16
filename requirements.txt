@@ -5,3 +5,4 @@ transformers==4.51.1
 einops
 timm
 pillow
+qwen-vl-utils[decord]
