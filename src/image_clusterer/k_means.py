@@ -11,17 +11,18 @@ class KMeansClusterer(Clusterer):
     def make_cluster(self, n_kernels):
         if n_kernels > len(self.data):
             raise Exception(message=f"n_kernels '{n_kernels}' bigger than amount of vectors '{len(self.data)}'")
-        i_kernels = self._select_random_kernels(n_kernels)
+        i_kernels = self._select_random_kernels(n_kernels).type(torch.LongTensor)
         kernels = self.data[i_kernels]
         for _ in range(MAX_CYCLES):
             weights = self.data @ kernels.T
             self.vectors2kernels = weights.argmax(dim=-1)
             weights = F.one_hot(self.vectors2kernels).to('cuda' if self.gpu else 'cpu')
-            kernels_tmp = (weights[...,None] * self.data[None,...]).sum(dim=-2)
-            kernels_tmp /= kernels_tmp.norm(dim=-1)
+            kernels_tmp = (weights.T[...,None] * self.data[None,...]).sum(dim=-2)
+            kernels_tmp /= kernels_tmp.norm(dim=-1).unsqueeze(-1)
             if (kernels_tmp * kernels).sum() > len(kernels) - 1e-4:
                 break
             kernels = kernels_tmp
+            print(f"finished cycle {_}")
     
     def _select_random_kernels(self, n_kernels):
         n_vectors, _ = self.data.shape

@@ -4,7 +4,7 @@ from transformers import AutoModel
 from src.image_embedder.embedder import ImageEmbedder
 
 
-class JinaClip(ImageEmbedder):
+class JinaClipEmbedder(ImageEmbedder):
 
     def load_model(self):
         return AutoModel.from_pretrained('jinaai/jina-clip-v2', trust_remote_code=True)\
