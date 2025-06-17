@@ -8,7 +8,7 @@ class Clusterer:
         self.vectors2kernels = None
 
     def push(self, embedding):
-        self.push_batch(torch.tensor([embedding]).to('cuda' if self.gpu else 'cpu'))
+        self.push_batch(torch.tensor(np.array([embedding])).to('cuda' if self.gpu else 'cpu'))
 
     def push_batch(self, batch_embedding):
         self.data = torch.cat((self.data, batch_embedding), dim=0)
