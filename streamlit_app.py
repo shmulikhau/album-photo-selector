@@ -134,9 +134,15 @@ if uploaded_files:
 
         for img_path in images_to_keep:
             shutil.copy(img_path, os.path.join(output_dir, os.path.basename(img_path)))
+        shutil.make_archive(tmp_dir + '/photos', 'zip', output_dir)
 
-        st.success(f"{len(images_to_keep)} images saved to: {output_dir}")
-        st.markdown(f"📁 **Saved folder path:** `{output_dir}`")
+        with open(tmp_dir + '/photos.zip', "rb") as file:
+            if st.download_button(
+                    label="Download zip",
+                    data=file,
+                    file_name="photos.zip"
+                ):
+                st.success(f"{len(images_to_keep)} images downloaded :)")
 
 else:
     st.info("Please upload images to get started.")
