@@ -10,7 +10,7 @@ MAX_CYCLES = int(os.getenv("K_MEANS_MAX_CYCLES", "100"))
 
 class KMeansClusterer(Clusterer):
 
-    @timeit()
+    @timeit(log_level=None)
     def make_cluster(self, n_kernels: int):
         if n_kernels > len(self.data):
             raise Exception(f"n_kernels ({n_kernels}) bigger than amount of vectors ({len(self.data)})")

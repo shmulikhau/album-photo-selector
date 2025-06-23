@@ -4,7 +4,7 @@ from src.image_clusterer.clusterer import Clusterer
 
 class DistanceClusterer(Clusterer):
 
-    @timeit()
+    @timeit(log_level=None)
     def make_cluster(self, threshould: float):
         global data; global indecies; global cluster_count
         data = self.data.detach().clone()
