@@ -117,8 +117,9 @@ if uploaded_files:
 
     for cluster_id, paths in clusters.items():
         st.markdown(f"### Cluster {cluster_id + 1}")
-        cols = st.columns(4)
         for i, img_path in enumerate(paths):
+            if i % 4 == 0:
+                cols = st.columns(4)
             col = cols[i % 4]
             with col:
                 img = Image.open(img_path)
