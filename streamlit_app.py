@@ -86,7 +86,7 @@ def upload_files(uploaded_files):
     return image_paths
 
 st.set_page_config(page_title="Image Clustering for Album", layout="wide")
-st.title("📸 Image Clustering & Deletion Interface for Album Selection")
+st.title("📸 Image Clustering & Selection Interface for Album Selection")
 
 # Upload Images
 uploaded_files = st.file_uploader("Upload multiple images", type=["jpg", "jpeg", "png"], accept_multiple_files=True)
