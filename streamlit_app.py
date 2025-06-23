@@ -11,8 +11,8 @@ from src.image_clusterer.k_means import KMeansClusterer
 from src.image_clusterer.distance import DistanceClusterer
 from src.image_embedder.jinaclip_embedder import JinaClipEmbedder
 
-logger = logging.getLogger('__main__')
-logger.setLevel(logging.DEBUG)
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 use_gpu = os.getenv("USE_GPU", "False").upper() == "TRUE"
 tmp_dir = os.getenv("TMP_DIR", '/tmp/image_selector')
@@ -21,7 +21,7 @@ tmp_dir = os.getenv("TMP_DIR", '/tmp/image_selector')
 def get_clusterer(algorithm, data):
     if algorithm == "KMeans":
         return KMeansClusterer(1024, data=data, gpu=use_gpu)
-    elif algorithm == "DBSACN":
+    elif algorithm == "DBSCAN":
         return DistanceClusterer(1024, data=data, gpu=use_gpu)
     else:
         raise Exception("algorithm not chosen!")
@@ -56,10 +56,12 @@ def get_clusters(image_paths, algorithm, algorithm_value, _data):
     
     clusters = {}
     
-    for i, c in enumerate(clusterer.vectors2kernels):
+    for i, c in enumerate(clusterer.vectors2kernels.tolist()):
         if c not in clusters.keys():
             clusters[c] = []
         clusters[c].append(image_paths[i])
+
+    clusters = {key:clusters[key] for key in sorted(clusters.keys())}
 
     logger.info(f'Finish clustering in {time() - start_time}ms')
     return clusters
@@ -70,7 +72,7 @@ def get_clusters(image_paths, algorithm, algorithm_value, _data):
 @st.cache_data(show_spinner=False)
 def upload_files(uploaded_files):
     try:
-        os.rmdir(tmp_dir)
+        shutil.rmtree(tmp_dir)
     except:
         pass
     os.mkdir(tmp_dir)
