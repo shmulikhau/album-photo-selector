@@ -1,9 +1,10 @@
 import torch
-from copy import deepcopy
+from timeit_decorator import timeit
 from src.image_clusterer.clusterer import Clusterer
 
-class SimpleClusterer(Clusterer):
+class DistanceClusterer(Clusterer):
 
+    @timeit()
     def make_cluster(self, threshould: float):
         global data; global indecies; global cluster_count
         data = self.data.detach().clone()

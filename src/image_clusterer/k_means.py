@@ -2,13 +2,16 @@ import torch
 import torch.nn.functional as F
 import os
 from src.image_clusterer.clusterer import Clusterer
+from timeit_decorator import timeit
 
 RANDOM_SCALE: float = 4.
 MAX_CYCLES = int(os.getenv("K_MEANS_MAX_CYCLES", "100"))
 
 
 class KMeansClusterer(Clusterer):
-    def make_cluster(self, n_kernels):
+
+    @timeit()
+    def make_cluster(self, n_kernels: int):
         if n_kernels > len(self.data):
             raise Exception(f"n_kernels ({n_kernels}) bigger than amount of vectors ({len(self.data)})")
         i_kernels = self._select_random_kernels(n_kernels).type(torch.LongTensor)

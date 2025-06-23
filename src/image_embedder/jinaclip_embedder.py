@@ -7,7 +7,7 @@ from src.image_embedder.embedder import ImageEmbedder
 class JinaClipEmbedder(ImageEmbedder):
 
     def load_model(self):
-        return AutoModel.from_pretrained('jinaai/jina-clip-v2', trust_remote_code=True)\
+        return AutoModel.from_pretrained('jinaai/jina-clip-v2', trust_remote_code=True, local_files_only=True)\
             .to('cuda' if self.gpu else 'cpu')
 
     def get_image_embeddings(self, image_batch: list) -> np.ndarray:

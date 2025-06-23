@@ -6,3 +6,5 @@ einops
 timm
 pillow
 qwen-vl-utils[decord]
+streamlit
+timeit-decorator
