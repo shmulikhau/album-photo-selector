@@ -131,7 +131,7 @@ if uploaded_files:
                 st.image(img, caption=os.path.basename(img_path), use_container_width=True)
                 img_cols = st.columns(2)
                 with img_cols[0]:
-                    if st.checkbox(f"to chat", value=False, key=f"cb_chat_{cluster_id}_{i}"):
+                    if st.checkbox(f"to chat 💬", value=False, key=f"cb_chat_{cluster_id}_{i}"):
                         images_to_chat.append(img_path)
                 with img_cols[1]:
                     if st.button("Delete", icon="❌", key=f'bt_delete_{cluster_id}_{i}'):
