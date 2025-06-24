@@ -142,6 +142,10 @@ if uploaded_files:
     # Export/Save Kept Images
     if st.button("Save Selected Images"):
         output_dir = os.path.join(tmp_dir, "selected_images")
+        try:
+            shutil.rmtree(output_dir)
+        except:
+            pass
         os.makedirs(output_dir, exist_ok=True)
 
         for img_path in image_paths:
