@@ -147,6 +147,8 @@ if uploaded_files:
         for img_path in image_paths:
             if img_path not in st.session_state.deleted_imgs:
                 shutil.copy(img_path, os.path.join(output_dir, os.path.basename(img_path)))
+        if os.path.isfile(tmp_dir + '/photos.zip'):
+            os.remove(tmp_dir + '/photos.zip')
         shutil.make_archive(tmp_dir + '/photos', 'zip', output_dir)
 
         with open(tmp_dir + '/photos.zip', "rb") as file:
