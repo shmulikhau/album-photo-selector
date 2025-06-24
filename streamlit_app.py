@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+import gc
 import shutil
 import logging
 from PIL import Image
@@ -29,6 +30,7 @@ def get_clusterer(algorithm, data):
 @st.cache_data(show_spinner=False)
 def embed_images(image_paths):
     logger.info('Embed images...')
+    embed_status = st.progress(0, text="Extracting embeddings...")
     embedder = JinaClipEmbedder(gpu=use_gpu)
     batch_size = int(os.getenv("BATCH_SIZE", "1"))
 
@@ -40,10 +42,14 @@ def embed_images(image_paths):
             embeddings = torch.cat((embeddings, torch.tensor(features).to('cuda' if use_gpu else 'cpu')), dim=0)
             batch = []
         batch.append(Image.open(image_paths[i]))
+        embed_status.progress(int((i+1)*100/len(image_paths)), text="Extracting embeddings...")
     if len(batch):
         features = embedder.get_image_embeddings(batch)
         embeddings = torch.cat((embeddings, torch.tensor(features).to('cuda' if use_gpu else 'cpu')), dim=0)
+    embedder = None
+    gc.collect()
     logger.info('Finish embed images')
+    embed_status.empty()
     return embeddings
 
 @st.cache_data(show_spinner=False)
@@ -84,6 +90,11 @@ def upload_files(uploaded_files):
             f.write(uploaded_file.getbuffer())
         image_paths.append(img_path)
     return image_paths
+
+def unselect_all_checkbox(startwith):
+    for key in st.session_state.keys():
+        if key.startswith(startwith):
+            st.session_state[key] = False
 
 st.set_page_config(page_title="Image Clustering for Album", layout="wide")
 st.title("📸 Image Clustering & Selection Interface for Album Selection")
@@ -162,6 +173,40 @@ if uploaded_files:
                     file_name="photos.zip"
                 ):
                 st.success(f"{len(image_paths) - len(st.session_state.deleted_imgs)} images downloaded :)")
+
+    # chat interface
+    with st.sidebar:
+        st.button('Unselect all of images for chat', on_click=lambda: unselect_all_checkbox('cb_chat_'))
+        st.title("Chat with Qwen2.5-vl")
+
+        # Initialize chat history
+        if "messages" not in st.session_state:
+            st.session_state.messages = []
+
+        # Display chat messages from history on app rerun
+        for message in st.session_state.messages:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+
+        # Accept user input
+        if prompt := st.chat_input("What is up?", on_submit=lambda: unselect_all_checkbox('cb_chat_')):
+            # Add user message to chat history
+            st.session_state.messages.append({"role": "user", "content": prompt})
+            # Display user message in chat message container
+            with st.chat_message("user"):
+                st.markdown(prompt)
+            # Display assistant response in chat message container
+            # with st.chat_message("assistant"):
+            #     stream = client.chat.completions.create(
+            #         model=st.session_state["openai_model"],
+            #         messages=[
+            #             {"role": m["role"], "content": m["content"]}
+            #             for m in st.session_state.messages
+            #         ],
+            #         stream=True,
+            #     )
+            #     response = st.write_stream(stream)
+            # st.session_state.messages.append({"role": "assistant", "content": response})
 
 else:
     st.info("Please upload images to get started.")
