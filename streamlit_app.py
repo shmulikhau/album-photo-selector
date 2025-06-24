@@ -28,7 +28,7 @@ def get_clusterer(algorithm, data):
     
 @st.cache_data(show_spinner=False)
 def embed_images(image_paths):
-    logger.info('Embed_images...')
+    logger.info('Embed images...')
     embedder = JinaClipEmbedder(gpu=use_gpu)
     batch_size = int(os.getenv("BATCH_SIZE", "1"))
 
@@ -113,28 +113,40 @@ if uploaded_files:
 
     # Display Clusters and Deletion UI
     st.subheader("🗂️ Review and delete unwanted images")
-    images_to_keep = []
+    images_to_chat = []
+    if "deleted_imgs" not in st.session_state:
+        st.session_state.deleted_imgs = []
 
     for cluster_id, paths in clusters.items():
         st.markdown(f"### Cluster {cluster_id + 1}")
-        for i, img_path in enumerate(paths):
+        i = 0
+        for img_path in paths:
+            if img_path in st.session_state.deleted_imgs:
+                continue
             if i % 4 == 0:
                 cols = st.columns(4)
             col = cols[i % 4]
             with col:
                 img = Image.open(img_path)
                 st.image(img, caption=os.path.basename(img_path), use_container_width=True)
-                keep = st.checkbox(f"Keep", value=True, key=f"{cluster_id}_{i}")
-                if keep:
-                    images_to_keep.append(img_path)
+                img_cols = st.columns(2)
+                with img_cols[0]:
+                    if st.checkbox(f"to chat", value=False, key=f"cb_chat_{cluster_id}_{i}"):
+                        images_to_chat.append(img_path)
+                with img_cols[1]:
+                    if st.button("Delete", icon="❌", key=f'bt_delete_{cluster_id}_{i}'):
+                        st.session_state.deleted_imgs.append(img_path)
+                        st.rerun()
+            i += 1
 
     # Export/Save Kept Images
     if st.button("Save Selected Images"):
         output_dir = os.path.join(tmp_dir, "selected_images")
         os.makedirs(output_dir, exist_ok=True)
 
-        for img_path in images_to_keep:
-            shutil.copy(img_path, os.path.join(output_dir, os.path.basename(img_path)))
+        for img_path in image_paths:
+            if img_path not in st.session_state.deleted_imgs:
+                shutil.copy(img_path, os.path.join(output_dir, os.path.basename(img_path)))
         shutil.make_archive(tmp_dir + '/photos', 'zip', output_dir)
 
         with open(tmp_dir + '/photos.zip', "rb") as file:
@@ -143,7 +155,7 @@ if uploaded_files:
                     data=file,
                     file_name="photos.zip"
                 ):
-                st.success(f"{len(images_to_keep)} images downloaded :)")
+                st.success(f"{len(image_paths) - len(st.session_state.deleted_imgs)} images downloaded :)")
 
 else:
     st.info("Please upload images to get started.")
