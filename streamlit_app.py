@@ -91,6 +91,10 @@ def upload_files(uploaded_files):
         image_paths.append(img_path)
     return image_paths
 
+@st.cache_data(show_spinner=False)
+def open_image(path):
+    return Image.open(path)
+
 def unselect_all_checkbox(startwith):
     for key in st.session_state.keys():
         if key.startswith(startwith):
@@ -124,7 +128,7 @@ if uploaded_files:
 
     # Display Clusters and Deletion UI
     st.subheader("🗂️ Review and delete unwanted images")
-    images_to_chat = []
+    st.session_state.images_to_chat = {}
     if "deleted_imgs" not in st.session_state:
         st.session_state.deleted_imgs = []
 
@@ -138,12 +142,14 @@ if uploaded_files:
                 cols = st.columns(4)
             col = cols[i % 4]
             with col:
-                img = Image.open(img_path)
+                img = open_image(img_path)
                 st.image(img, caption=os.path.basename(img_path), use_container_width=True)
                 img_cols = st.columns(2)
                 with img_cols[0]:
                     if st.checkbox(f"to chat 💬", value=False, key=f"cb_chat_{cluster_id}_{i}"):
-                        images_to_chat.append(img_path)
+                        st.session_state.images_to_chat[img_path] = None
+                    elif img_path in st.session_state.images_to_chat.keys():
+                        del st.session_state.images_to_chat[img_path]
                 with img_cols[1]:
                     if st.button("Delete", icon="❌", key=f'bt_delete_{cluster_id}_{i}'):
                         st.session_state.deleted_imgs.append(img_path)
@@ -186,12 +192,34 @@ if uploaded_files:
         # Display chat messages from history on app rerun
         for message in st.session_state.messages:
             with st.chat_message(message["role"]):
-                st.markdown(message["content"])
+                for content in message["content"]:
+                    if content["type"] == "text":
+                        st.markdown(content["text"])
+                    elif content["type"] == "image":
+                        img_path = content["image"][8:]
+                        st.image(open_image(img_path), caption=os.path.basename(img_path), use_container_width=True)
 
+        def chat_input_onsubmit():
+            st.session_state.chat_images = list(st.session_state.images_to_chat.keys())
+            unselect_all_checkbox('cb_chat_')
         # Accept user input
-        if prompt := st.chat_input("What is up?", on_submit=lambda: unselect_all_checkbox('cb_chat_')):
+        if prompt := st.chat_input("What is up?", on_submit=chat_input_onsubmit):
+            # Convert images to chat
+            image_prompt = []
+            for i, path in enumerate(st.session_state.chat_images):
+                image_prompt.append({"type": "text", "text": f"image {i+1}:"})
+                image_prompt.append({"type": "image", "image": f"file:///{path}"})
+            del st.session_state.chat_images
             # Add user message to chat history
-            st.session_state.messages.append({"role": "user", "content": prompt})
+            st.session_state.messages.append(
+                {
+                    "role": "user", 
+                    "content": [
+                        *image_prompt,
+                        {"type": "text", "text": prompt}
+                    ]
+                }
+            )
             # Display user message in chat message container
             with st.chat_message("user"):
                 st.markdown(prompt)
@@ -207,6 +235,7 @@ if uploaded_files:
             #     )
             #     response = st.write_stream(stream)
             # st.session_state.messages.append({"role": "assistant", "content": response})
+            st.rerun()
 
 else:
     st.info("Please upload images to get started.")
