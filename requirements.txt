@@ -1,7 +1,8 @@
 torch
 numpy
 torchvision
-transformers==4.51.1
+transformers==4.51.3
+accelerate
 einops
 timm
 pillow

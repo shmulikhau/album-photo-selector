@@ -1,9 +1,10 @@
 
-class Descriptor:
+class BaseGenerator:
 
     def __init__(self, gpu: bool = False):
         self.model = self.load_model()
-        self.short_description_prompt = """
+        self.gpu = gpu
+        self.system_prompt = """
 You are an intelligent agent tasked with analyzing a set of images and providing a short, 2-4 word description of the common denominator shared among them. Your description should capture the key visual themes or elements that appear in all the images.
 When given a list of images, your response should:
 1. Focus on key visual patterns or themes such as colors, objects, settings, or emotions.
@@ -14,5 +15,5 @@ When given a list of images, your response should:
     def load_model(self):
         raise NotImplementedError()
 
-    def get_description(self, image_paths: list[str], text_query: str) -> str:
+    def chat(self, history) -> str:
         raise NotImplementedError()
