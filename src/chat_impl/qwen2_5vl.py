@@ -14,6 +14,8 @@ class Qwen2_5VL(BaseGenerator):
         model, processor = self.model
         device = 'cuda' if self.gpu else 'cpu'
 
+        history = [{"role": "system", "content": self.system_prompt}, *history]
+
         # Preparation for inference
         text = processor.apply_chat_template(
             history, tokenize=False, add_generation_prompt=True
