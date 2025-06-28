@@ -182,7 +182,7 @@ if uploaded_files and len(uploaded_files) >= 2:
 
     # chat interface
     with st.sidebar:
-        st.button('Unselect all of images for chat', on_click=lambda: unselect_all_checkbox('cb_chat_'))
+        st.button('Unselect all images', on_click=lambda: unselect_all_checkbox('cb_chat_'))
         st.title("Chat with Qwen2.5-vl")
 
         # Initialize chat history
