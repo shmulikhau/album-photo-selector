@@ -104,9 +104,9 @@ st.set_page_config(page_title="Image Clustering for Album", layout="wide")
 st.title("📸 Image Clustering & Selection Interface for Album Selection")
 
 # Upload Images
-uploaded_files = st.file_uploader("Upload multiple images", type=["jpg", "jpeg", "png"], accept_multiple_files=True)
+uploaded_files = st.file_uploader("Upload minimum 2 images", type=["jpg", "jpeg", "png"], accept_multiple_files=True)
 
-if uploaded_files:
+if uploaded_files and len(uploaded_files) >= 2:
     st.success(f"{len(uploaded_files)} images uploaded.")
 
     image_paths = upload_files(uploaded_files)
@@ -118,7 +118,7 @@ if uploaded_files:
     algorithm = st.selectbox("Select Clustering Algorithm", ("KMeans", "DBSCAN"))
     algortihm_value = None
     if algorithm == "KMeans":
-        algortihm_value = st.slider("Number of clusters", min_value=2, max_value=500, value=3)
+        algortihm_value = st.slider("Number of clusters", min_value=2, max_value=len(image_paths), value=2)
     elif algorithm == "DBSCAN":
         algortihm_value = st.slider("DBSCAN Epsilon (eps)", min_value=-1., max_value=1., value=.5, step=1e-2)
 
