@@ -7,10 +7,10 @@ from PIL import Image
 import numpy as np
 import torch
 from time import time
-from src.image_clusterer.clusterer import Clusterer
 from src.image_clusterer.k_means import KMeansClusterer
 from src.image_clusterer.distance import DistanceClusterer
 from src.image_embedder.jinaclip_embedder import JinaClipEmbedder
+from src.chat_impl.qwen2_5vl import Qwen2_5VL
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -27,8 +27,11 @@ def get_clusterer(algorithm, data):
     else:
         raise Exception("algorithm not chosen!")
     
-@st.cache_data(show_spinner=False)
+@st.cache_resource(show_spinner=False)
 def embed_images(image_paths):
+    get_chat_model.clear()
+    gc.collect()
+    torch.cuda.empty_cache()
     logger.info('Embed images...')
     embed_status = st.progress(0, text="Extracting embeddings...")
     embedder = JinaClipEmbedder(gpu=use_gpu)
@@ -47,12 +50,13 @@ def embed_images(image_paths):
         features = embedder.get_image_embeddings(batch)
         embeddings = torch.cat((embeddings, torch.tensor(features).to('cuda' if use_gpu else 'cpu')), dim=0)
     embedder = None
-    gc.collect()
     logger.info('Finish embed images')
+    gc.collect()
+    torch.cuda.empty_cache()
     embed_status.empty()
     return embeddings
 
-@st.cache_data(show_spinner=False)
+@st.cache_data
 def get_clusters(image_paths, algorithm, algorithm_value, _data):
     start_time = time()
     clusterer = get_clusterer(algorithm, _data)
@@ -72,10 +76,18 @@ def get_clusters(image_paths, algorithm, algorithm_value, _data):
     logger.info(f'Finish clustering in {time() - start_time}ms')
     return clusters
 
+@st.cache_resource
+def get_chat_model():
+    gc.collect()
+    torch.cuda.empty_cache()
+    model = Qwen2_5VL(gpu=use_gpu)
+    logger.info('Chat Model loaded successfuly')
+    return model
+
 # === Streamlit App ===
 
 # Save uploaded files to temp directory
-@st.cache_data(show_spinner=False)
+@st.cache_data
 def upload_files(uploaded_files):
     try:
         shutil.rmtree(tmp_dir)
@@ -91,7 +103,7 @@ def upload_files(uploaded_files):
         image_paths.append(img_path)
     return image_paths
 
-@st.cache_data(show_spinner=False)
+@st.cache_resource
 def open_image(path):
     return Image.open(path)
 
@@ -192,12 +204,15 @@ if uploaded_files and len(uploaded_files) >= 2:
         # Display chat messages from history on app rerun
         for message in st.session_state.messages:
             with st.chat_message(message["role"]):
-                for content in message["content"]:
-                    if content["type"] == "text":
-                        st.markdown(content["text"])
-                    elif content["type"] == "image":
-                        img_path = content["image"][8:]
-                        st.image(open_image(img_path), caption=os.path.basename(img_path), use_container_width=True)
+                if type(message["content"]) == list:
+                    for content in message["content"]:
+                        if content["type"] == "text":
+                            st.markdown(content["text"])
+                        elif content["type"] == "image":
+                            img_path = content["image"][8:]
+                            st.image(open_image(img_path), caption=os.path.basename(img_path), use_container_width=True)
+                elif type(message["content"]) == str:
+                    st.markdown(message["content"])
 
         def chat_input_onsubmit():
             st.session_state.chat_images = list(st.session_state.images_to_chat.keys())
@@ -208,33 +223,27 @@ if uploaded_files and len(uploaded_files) >= 2:
             image_prompt = []
             for i, path in enumerate(st.session_state.chat_images):
                 image_prompt.append({"type": "text", "text": f"image {i+1}:"})
-                image_prompt.append({"type": "image", "image": f"file:///{path}"})
+                image_prompt.append({"type": "image", "image": f"file:///{path}", "max_pixels": 256 * 28 * 28})
             del st.session_state.chat_images
             # Add user message to chat history
             st.session_state.messages.append(
                 {
-                    "role": "user", 
+                    "role": "user",
                     "content": [
                         *image_prompt,
                         {"type": "text", "text": prompt}
                     ]
                 }
             )
-            # Display user message in chat message container
-            with st.chat_message("user"):
-                st.markdown(prompt)
-            # Display assistant response in chat message container
-            # with st.chat_message("assistant"):
-            #     stream = client.chat.completions.create(
-            #         model=st.session_state["openai_model"],
-            #         messages=[
-            #             {"role": m["role"], "content": m["content"]}
-            #             for m in st.session_state.messages
-            #         ],
-            #         stream=True,
-            #     )
-            #     response = st.write_stream(stream)
-            # st.session_state.messages.append({"role": "assistant", "content": response})
+            # add assistant response in chat message container
+            chat_model = get_chat_model()
+            response = chat_model.chat(st.session_state.messages)
+            st.session_state.messages.append(
+                {
+                    "role": "assistant",
+                    "content": response[0]
+                }
+            )
             st.rerun()
 
 else:

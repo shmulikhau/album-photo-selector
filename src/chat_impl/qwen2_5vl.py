@@ -28,10 +28,10 @@ class Qwen2_5VL(BaseGenerator):
             padding=True,
             return_tensors="pt",
         )
-        input_ids=inputs.input_ids.to(device)
-        attention_mask=inputs.attention_mask.to(device)
-        pixel_values=inputs.pixel_values.to(device)
-        image_grid_thw=inputs.image_grid_thw.to(device)
+        input_ids=inputs.input_ids.to(device) if "input_ids" in inputs.data else None
+        attention_mask=inputs.attention_mask.to(device) if "attention_mask" in inputs.data else None
+        pixel_values=inputs.pixel_values.to(device) if "pixel_values" in inputs.data else None
+        image_grid_thw=inputs.image_grid_thw.to(device) if "image_grid_thw" in inputs.data else None
 
         # Inference
         generated_ids = model.generate(input_ids=input_ids, attention_mask=attention_mask, 
