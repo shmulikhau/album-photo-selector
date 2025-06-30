@@ -7,8 +7,8 @@ class DistanceClusterer(Clusterer):
     @timeit(log_level=None)
     def make_cluster(self, threshould: float):
         global data; global indecies; global cluster_count
-        data = self.data.detach().clone()
-        indecies = torch.arange(0, len(data))
+        data = self.data.detach().clone().to('cuda' if self.gpu else 'cpu')
+        indecies = torch.arange(0, len(data)).to('cuda' if self.gpu else 'cpu')
         cluster_count = 0
         self.vectors2kernels = torch.zeros_like(indecies).to('cuda' if self.gpu else 'cpu')
 
@@ -27,9 +27,7 @@ class DistanceClusterer(Clusterer):
         while len(data):
             self.vectors2kernels[indecies[0]] = cluster_count
             vector_cluster = data[0]
-            mask = torch.ones_like(indecies).to('cuda' if self.gpu else 'cpu')
-            mask[0] = 0
-            data = data[mask==1]
-            indecies = indecies[mask==1]
+            data = data[1:]
+            indecies = indecies[1:]
             clustering(vector_cluster)
             cluster_count += 1
