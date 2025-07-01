@@ -1,5 +1,5 @@
 # Album Photo Selector
-an assitant to **Album Photo Selecting** powered by AI
+An assitant to **Album Photo Selecting** powered by AI
 
 
 All process implementing - from upload or remove photos, to spliting to groups by semantic similarity, and to be helped by chat-bot for good filtering!
