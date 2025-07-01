@@ -44,12 +44,14 @@ In the Left Side-Bar you can see the Chat-Bot, it is configured to be Personal A
 In up of the Left Side-Bar you can unselecting all the photos that selected by Check-Box to using in the chat, by clicking on the button.
 
 ## About the Implemetation
+### UI
+the Ui implemented by using [Streamlit.io](https://streamlit.io/) framework, this framework desined to Data-Science Visualization projects and it's good for controling in the components.
 ### Embedding Model
 I chose to using **Jina-CLIP V2**, that described on this paper - https://arxiv.org/abs/2412.08802,
 the benfits of this model is that it trained on pairs of textual description and images that makes it good for retrieval semantic aware latents.
 
 ### Clustering Algorithms
-#### KMeans
+#### K-Means
 you can read here: [Wikipedia](https://en.wikipedia.org/wiki/K-means_clustering) about this algorithm,
 I chose to mesure the distance between the vectors by [Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity).
 #### DBSCAN
