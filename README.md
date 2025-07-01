@@ -10,9 +10,9 @@ All process implementing - from upload or remove photos, to spliting to groups b
 - 8G RAM with GPU or 32G RAM without GPU
 - GPU - minimum 8G VRAM
 #### Recommended
-- Intel i7 or Amd Ryzen 7
-- 16G RAM
-- Nvidia GeForce RTX 5060 8G-VRAM
+- Intel i7 or Amd Ryzen 7 processors and above
+- 16G RAM or more
+- Nvidia GeForce RTX 5060 8G-VRAM and above
 ### Install/Run
 #### Using docker:
 
@@ -41,7 +41,7 @@ Above the gallery you can control the clustering, by select between **KMeans** *
 
 In the Left Side-Bar you can see the Chat-Bot, it is configured to be Personal Album Assistat, you can select multiple photos by the Check-Box and ask the chat about them, you can ask questions like *'Which photo is better?'* *'Is this photo suitable to children album?'* and more,
 
-In up of the Left Side-Bar you can unselecting all the photos that selected by Check-Box to using in the chat, by clicking on the button.
+In up of the Left Side-Bar you can find the button to unselecting all the photos that selected by Check-Box to using in the chat-bot.
 
 ## About the Implemetation
 ### UI
