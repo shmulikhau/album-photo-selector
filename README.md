@@ -34,7 +34,7 @@ In browser - open ```localhost:8501```,
 
 Upload photos using **Drag&Drop**,
 
-<img src="./demos/darg-n-drop-files.gif" alt="alt text" height="200"/>
+<img src="./demos/darg-n-drop-files.gif" alt="alt text" height="100"/>
 
 or **Upload** Button,
 
