@@ -43,26 +43,26 @@ In the Left Side-Bar you can see the Chat-Bot, it is configured to be Personal A
 
 In up of the Left Side-Bar you can unselecting all the photos that selected by Check-Box to using in the chat, by clicking on the button.
 
-### About the Implemetation
-#### Embedding Model
+## About the Implemetation
+### Embedding Model
 I chose to using **Jina-CLIP V2**, that described on this paper - https://arxiv.org/abs/2412.08802,
 the benfits of this model is that it trained on pairs of textual description and images that makes it good for retrieval semantic aware latents.
 
-#### Clustering Algorithms
-##### KMeans
+### Clustering Algorithms
+#### KMeans
 you can read here: [Wikipedia](https://en.wikipedia.org/wiki/K-means_clustering) about this algorithm,
 I chose to mesure the distance between the vectors by [Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity).
-##### DBSCAN
+#### DBSCAN
 you can read here: [Wikipedia](https://en.wikipedia.org/wiki/DBSCAN) about this algorithm,
 in the original implementation clusters thats smallet that 2 or configured threshold objects will removed - in this implementaion no one photo will removed,
 I chose to mesure the distance between the vectors by [Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity).
 
-#### Chat-Bot Model
+### Chat-Bot Model
 I chose to using **QWEN 2.5 VL**, that described on this paper - https://arxiv.org/abs/2502.13923,
 the benfits of this model is that it very good to aware to small detailes in pictures even text understanding by the paper (it's happen by using almost all the letents that's coming from the vision embedder), and it much smaller to running locally,
 in this project for security it implemented to running locally so it is big advantage.
 
-### Source Files Tree
+## Source Files Tree
 
 - [**streamlit_app.py**](./streamlit_app.py) - streamlit ui code
 - [**Dockerfile**](./Dockerfile) - main Docker File
