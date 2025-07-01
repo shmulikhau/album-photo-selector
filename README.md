@@ -1,8 +1,9 @@
 # Album Photo Selector
 An assitant to **Album Photo Selecting** powered by AI
 
-
 All process implementing - from upload or remove photos, to spliting to groups by semantic similarity, and to be helped by chat-bot for good filtering!
+
+<img src="./demos/gallery-show.gif" alt="alt text" width="80%"/>
 
 ## Quick-Start
 ### Hardware Requirements
@@ -31,15 +32,26 @@ cd into project directory:
 ### Start Guide
 In browser - open ```localhost:8501```,
 
-Upload photos using **Drag&Drop** or **Upload** Button,
+Upload photos using **Drag&Drop**,
+
+<img src="./demos/darg-n-drop-files.gif" alt="alt text" height="200"/>
+
+or **Upload** Button,
+
+<img src="./demos/upload-files.gif" alt="alt text" height="200"/>
 
 Wait for processing all of the photos,
 
 The photos will show in Gallery Format divided into clusters, you can delete every photo that you didn't needed for your album,
+above the gallery you can control the clustering, by select between **KMeans** **DBSCAN** algorithms, and contorl the properties by the Slide-Bar,
 
-Above the gallery you can control the clustering, by select between **KMeans** **DBSCAN** algorithms, and contorl the properties by the Slide-Bar,
+![Alt Text](./demos/using-the-gallery.gif)
 
 In the Left Side-Bar you can see the Chat-Bot, it is configured to be Personal Album Assistat, you can select multiple photos by the Check-Box and ask the chat about them, you can ask questions like *'Which photo is better?'* *'Is this photo suitable to children album?'* and more,
+
+![Alt Text](./demos/start-using-chat.gif)
+
+<img src="./demos/chat-response.gif" alt="alt text" width="200"/>
 
 In up of the Left Side-Bar you can find the button to unselecting all the photos that selected by Check-Box to using in the chat-bot.
 
