@@ -45,11 +45,11 @@ Wait for processing all of the photos,
 The photos will show in Gallery Format divided into clusters, you can delete every photo that you didn't needed for your album,
 above the gallery you can control the clustering, by select between **KMeans** **DBSCAN** algorithms, and contorl the properties by the Slide-Bar,
 
-![Alt Text](./demos/using-the-gallery.gif)
+![](./demos/using-the-gallery.gif)
 
 In the Left Side-Bar you can see the Chat-Bot, it is configured to be Personal Album Assistat, you can select multiple photos by the Check-Box and ask the chat about them, you can ask questions like *'Which photo is better?'* *'Is this photo suitable to children album?'* and more,
 
-![Alt Text](./demos/start-using-chat.gif)
+![](./demos/start-using-chat.gif)
 
 <img src="./demos/chat-response.gif" alt="alt text" width="200"/>
 
