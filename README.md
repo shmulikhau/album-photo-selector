@@ -60,15 +60,19 @@ In up of the Left Side-Bar you can find the button to unselecting all the photos
 the Ui implemented by using [Streamlit.io](https://streamlit.io/) framework, this framework desined to Data-Science Visualization projects and it's good for controling in the components.
 ### Embedding Model
 I chose to using **Jina-CLIP V2**, that described on this paper - https://arxiv.org/abs/2412.08802,
+
 the benfits of this model is that it trained on pairs of textual description and images that makes it good for retrieval semantic aware latents.
 
 ### Clustering Algorithms
 #### K-Means
 you can read here: [Wikipedia](https://en.wikipedia.org/wiki/K-means_clustering) about this algorithm,
+
 I chose to mesure the distance between the vectors by [Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity).
 #### DBSCAN
 you can read here: [Wikipedia](https://en.wikipedia.org/wiki/DBSCAN) about this algorithm,
-in the original implementation clusters thats smallet that 2 or configured threshold objects will removed - in this implementaion no one photo will removed,
+
+in the original implementation clusters thats smallet that 2 objects (or any configured threshold) will removed - in this implementaion no one photo will removed,
+
 I chose to mesure the distance between the vectors by [Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity).
 
 ### Chat-Bot Model
