@@ -71,7 +71,7 @@ I chose to mesure the distance between the vectors by [Cosine Similarity](https:
 #### DBSCAN
 you can read here: https://en.wikipedia.org/wiki/DBSCAN about this algorithm,
 
-in the original implementation clusters thats smallet that 2 objects (or any configured threshold) will removed - in this implementaion no one photo will removed,
+in the original implementation clusters thats smallet that 2 objects (or any configured threshold) will removed - in this implementaion no one photo will be removed,
 
 I chose to mesure the distance between the vectors by [Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity).
 
