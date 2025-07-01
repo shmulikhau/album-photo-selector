@@ -113,7 +113,7 @@ def unselect_all_checkbox(startwith):
             st.session_state[key] = False
 
 st.set_page_config(page_title="Image Clustering for Album", layout="wide")
-st.title("📸 Image Clustering & Selection Interface for Album Photo Selection")
+st.title("📸 Image Clustering & Selection Interface for Album Selection")
 
 # Upload Images
 uploaded_files = st.file_uploader("Upload minimum 2 images", type=["jpg", "jpeg", "png"], accept_multiple_files=True)
