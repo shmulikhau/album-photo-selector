@@ -83,13 +83,13 @@ in this project for security it implemented to running locally so it is big adva
 
 ## Source Files Tree
 
-- [**streamlit_app.py**](./streamlit_app.py) - streamlit ui code
-- [**Dockerfile**](./Dockerfile) - main Docker File
-- [**requirements.txt**](./requirements.txt) - python requirements
+- [**streamlit_app.py**](./streamlit_app.py) - Streamlit UI code
+- [**Dockerfile**](./Dockerfile) - Main Docker File
+- [**requirements.txt**](./requirements.txt) - Python dependencies
 - [**src**](./src)
-    - [**chat_impl**](./src/chat_impl) - chat implementation
-    - [**image_clusterer**](./src/image_clusterer) - clustering algorithms implementation
+    - [**chat_impl**](./src/chat_impl) - Chat implementation
+    - [**image_clusterer**](./src/image_clusterer) - Clustering algorithms implementation
         - [**distance.py**](./src/image_clusterer/distance.py) - DBSCAN implementation
-        - [**k_means.py**](./src/image_clusterer/k_means.py) - K Means implementation
-    - [**image_embedder**](./src/image_embedder) - embedding image to latent model implementation
-- [**test.ipynb**](./test.ipynb) - a Notebook to test the clustering algorithms
+        - [**k_means.py**](./src/image_clusterer/k_means.py) - K-Means implementation
+    - [**image_embedder**](./src/image_embedder) - Embedding image to latent model implementation
+- [**test.ipynb**](./test.ipynb) - Jupyter notebook to test clustering algorithms
