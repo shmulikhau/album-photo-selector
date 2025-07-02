@@ -65,11 +65,11 @@ the benfits of this model is that it trained on pairs of textual description and
 
 ### Clustering Algorithms
 #### K-Means
-you can read here: https://en.wikipedia.org/wiki/K-means_clustering about this algorithm.
+you can read here: https://en.wikipedia.org/wiki/K-means_clustering about the algorithm.
 
 I chose to mesure the distance between the vectors by [Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity).
 #### DBSCAN
-you can read here: https://en.wikipedia.org/wiki/DBSCAN about this algorithm.
+you can read here: https://en.wikipedia.org/wiki/DBSCAN about the algorithm.
 
 in the original implementation, clusters thats smallet than 2 objects (or any configured threshold) will removed - in this implementaion no one photo will be removed.
 
