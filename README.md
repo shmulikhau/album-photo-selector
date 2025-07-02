@@ -61,7 +61,7 @@ the Ui implemented by using [Streamlit.io](https://streamlit.io/) framework, thi
 ### Embedding Model
 I chose to using **Jina-CLIP V2**, that described on this paper - https://arxiv.org/abs/2412.08802.
 
-the benfits of this model is that it trained on pairs of textual description and images that makes it good for retrieval semantic awareness latents.
+the benefits of this model is that it trained on pairs of textual description and images that makes it good for retrieval letants with a Semantic attention.
 
 ### Clustering Algorithms
 #### K-Means
