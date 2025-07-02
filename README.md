@@ -30,30 +30,30 @@ cd into project directory:
 ```docker run -d -p 8501:8501 image_selector```
 
 ### Start Guide
-In browser - open ```localhost:8501```,
+In browser, open ```localhost:8501```.
 
 Upload photos using **Drag&Drop**,
 
 <img src="./demos/darg-n-drop-files.gif" alt="alt text" height="100"/>
 
-or **Upload** Button,
+or **Upload** Button.
 
 <img src="./demos/upload-files.gif" alt="alt text" height="200"/>
 
-Wait for processing all of the photos,
+Wait for processing all of the photos.
 
-The photos will show in Gallery Format divided into clusters, you can delete every photo that you didn't needed for your album,
-above the gallery you can control the clustering, by select between **KMeans** **DBSCAN** algorithms, and contorl the properties by the Slide-Bar,
+The photos will show in Gallery Format divided into clusters, you can delete every photo that you want to fileter in your album,
+above the gallery you can control the clustering, by select between **KMeans** **DBSCAN** algorithms, and contorl the properties by the Slider.
 
 ![](./demos/using-the-gallery.gif)
 
-In the Left Side-Bar you can see the Chat-Bot, it is configured to be Personal Album Assistat, you can select multiple photos by the Check-Box and ask the chat about them, you can ask questions like *'Which photo is better?'* *'Is this photo suitable to children album?'* and more,
+In the Left Side-Bar you can see the Chat-Bot, it is configured to be Personal Album Assistat, you can select multiple photos by the Check-Box and ask the chat about them, you can ask questions like *'Which photo is better?'* *'Is this photo suitable to children album?'* and more.
 
 ![](./demos/start-using-chat.gif)
 
 <img src="./demos/chat-response.gif" alt="alt text" width="200"/>
 
-In up of the Left Side-Bar you can find the button to unselecting all the photos that selected by Check-Box to using in the chat-bot.
+In up of the Left Side-Bar you can find the button to deselecting all the photos that selected by Check-Box to using in the chat-bot.
 
 ## About the Implemetation
 ### UI
