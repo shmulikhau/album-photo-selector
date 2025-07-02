@@ -59,24 +59,25 @@ In up of the Left Side-Bar you can find the button to unselecting all the photos
 ### UI
 the Ui implemented by using [Streamlit.io](https://streamlit.io/) framework, this framework desined to Data-Science Visualization projects and it's good for controling in the components.
 ### Embedding Model
-I chose to using **Jina-CLIP V2**, that described on this paper - https://arxiv.org/abs/2412.08802,
+I chose to using **Jina-CLIP V2**, that described on this paper - https://arxiv.org/abs/2412.08802.
 
 the benfits of this model is that it trained on pairs of textual description and images that makes it good for retrieval semantic aware latents.
 
 ### Clustering Algorithms
 #### K-Means
-you can read here: https://en.wikipedia.org/wiki/K-means_clustering about this algorithm,
+you can read here: https://en.wikipedia.org/wiki/K-means_clustering about this algorithm.
 
 I chose to mesure the distance between the vectors by [Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity).
 #### DBSCAN
-you can read here: https://en.wikipedia.org/wiki/DBSCAN about this algorithm,
+you can read here: https://en.wikipedia.org/wiki/DBSCAN about this algorithm.
 
-in the original implementation clusters thats smallet that 2 objects (or any configured threshold) will removed - in this implementaion no one photo will be removed,
+in the original implementation, clusters thats smallet than 2 objects (or any configured threshold) will removed - in this implementaion no one photo will be removed.
 
 I chose to mesure the distance between the vectors by [Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity).
 
 ### Chat-Bot Model
-I chose to using **QWEN 2.5 VL**, that described on this paper - https://arxiv.org/abs/2502.13923,
+I chose to using **QWEN 2.5 VL**, that described on this paper - https://arxiv.org/abs/2502.13923.
+
 the benefits of this model is that it very good to aware small details in pictures - even text understanding as describe in the paper (it's happen by using almost all the letents that's coming from the vision embedder), and it much smaller to running locally,
 in this project for security it implemented to running locally so it is big advantage.
 
