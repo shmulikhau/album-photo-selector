@@ -1,7 +1,7 @@
 # Album Photo Selector
 An assitant to **Album Photo Selecting** powered by AI
 
-All process implementing - from upload or remove photos, to spliting to groups by semantic similarity, and to assistance with a chat-bot for better filtering!
+All process implementing - from upload or remove photos, to splitting to groups by semantic similarity, and to assistance with a chat-bot for better filtering!
 
 <img src="./demos/gallery-show.gif" alt="alt text" width="80%"/>
 
