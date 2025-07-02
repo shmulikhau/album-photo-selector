@@ -77,7 +77,7 @@ I chose to mesure the distance between the vectors by [Cosine Similarity](https:
 
 ### Chat-Bot Model
 I chose to using **QWEN 2.5 VL**, that described on this paper - https://arxiv.org/abs/2502.13923,
-the benfits of this model is that it very good to aware to small detailes in pictures even text understanding by the paper (it's happen by using almost all the letents that's coming from the vision embedder), and it much smaller to running locally,
+the benefits of this model is that it very good to aware small details in pictures - even text understanding as describe in the paper (it's happen by using almost all the letents that's coming from the vision embedder), and it much smaller to running locally,
 in this project for security it implemented to running locally so it is big advantage.
 
 ## Source Files Tree
