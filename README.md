@@ -13,7 +13,7 @@ All the process implemented - from upload or remove photos, to splitting to grou
 #### Recommended
 - Intel i7 or Amd Ryzen 7 processors and above
 - 16G RAM or more
-- Nvidia GeForce RTX 5060 8G-VRAM and above
+- Nvidia GeForce RTX 4060 8G-VRAM and above
 ### Install/Run
 #### Using docker:
 
