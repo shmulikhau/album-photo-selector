@@ -1,7 +1,11 @@
 # Album Photo Selector
 An assitant to **Album Photo Selecting** powered by AI
 
+Do you need to select photos for an album, and you have too many photos?
+
 All the process implemented - from upload or remove photos, to splitting to groups by semantic similarity, and to assistance with a chat-bot for better filtering!
+
+You can filter out duplicate photos or similar poses by dividing the photos into clusters of similar photos and poses, and use a chatbot to reduce the number of photos in each cluster to one.
 
 <img src="./demos/gallery-show.gif" alt="alt text" width="80%"/>
 
@@ -42,8 +46,8 @@ or **Upload** Button.
 
 Wait for processing all of the photos.
 
-The photos will show in Gallery Format divided into clusters, you can delete every photo that you want to fileter in your album,
-above the gallery you can control the clustering, by select between **KMeans** **DBSCAN** algorithms, and contorl the properties by the Slider.
+The photos will show in Gallery Format divided into clusters, you can delete every photo that you want to filter in your album,
+above the gallery you can control the clustering, by select between **KMeans** and **DBSCAN** algorithms, and control the properties by the Slider.
 
 ![](./demos/using-the-gallery.gif)
 
